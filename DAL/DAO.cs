@@ -136,5 +136,28 @@ namespace DAL
                         mCon.Close();
             }
         }
+        public SqlDataReader ExecuteReader(string storedProcedure, Dictionary<string, object> parametros)
+        {
+            try
+            {
+                SqlCommand comando = new SqlCommand(storedProcedure, mCon);
+                comando.CommandType = CommandType.StoredProcedure;
+
+                if (parametros != null)
+                {
+                    foreach (var param in parametros)
+                    {
+                        comando.Parameters.AddWithValue(param.Key, param.Value ?? DBNull.Value);
+                    }
+                }
+                mCon.Open();
+ 
+                return comando.ExecuteReader(CommandBehavior.CloseConnection);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al ejecutar el procedimiento almacenado: " + storedProcedure, ex);
+            }
+        }
     }
 }

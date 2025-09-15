@@ -59,14 +59,14 @@ namespace DAL
                 DataSet ds = dAO.ExecuteDataSet(commandText);
                 if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
                 {
-                    DataRow row = ds.Tables[0].Rows[0];
+                    foreach (DataRow row in ds.Tables[0].Rows)
                     {
                         Bitacora bitacora = new Bitacora();
-                        bitacora.id = Convert.ToInt32(row["id"]);
+                        bitacora.id = Convert.ToInt32(row["id_bitacora"]);
                         bitacora.idUsuario = Convert.ToInt32(row["idUsuario"]);
                         bitacora.fecha = Convert.ToDateTime(row["fecha"]);
                         bitacora.mensaje = row["mensaje"].ToString();
-                        //bitacora.estado = reader.GetString(4);
+                        bitacora.estado = row["Estado"].ToString();
                         listBit.Add(bitacora);
                     }
                 }

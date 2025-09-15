@@ -32,16 +32,17 @@
             this.txtNombre = new System.Windows.Forms.TextBox();
             this.txtContra = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.btnRegistro = new System.Windows.Forms.Button();
+            this.lblUsuario = new System.Windows.Forms.Label();
+            this.lblContraseña = new System.Windows.Forms.Label();
+            this.lblLenguaje = new System.Windows.Forms.Label();
+            this.cmbIdioma = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // btnLogin
             // 
-            this.btnLogin.Location = new System.Drawing.Point(567, 302);
+            this.btnLogin.Location = new System.Drawing.Point(320, 284);
             this.btnLogin.Name = "btnLogin";
-            this.btnLogin.Size = new System.Drawing.Size(144, 36);
+            this.btnLogin.Size = new System.Drawing.Size(146, 47);
             this.btnLogin.TabIndex = 0;
             this.btnLogin.Text = "Entrar";
             this.btnLogin.UseVisualStyleBackColor = true;
@@ -60,6 +61,7 @@
             this.txtContra.Name = "txtContra";
             this.txtContra.Size = new System.Drawing.Size(193, 22);
             this.txtContra.TabIndex = 2;
+            this.txtContra.TextChanged += new System.EventHandler(this.txtContra_TextChanged);
             // 
             // label1
             // 
@@ -73,48 +75,61 @@
             this.label1.Text = "E-Canchas";
             this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
-            // label2
+            // lblUsuario
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(113, 132);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(167, 16);
-            this.label2.TabIndex = 4;
-            this.label2.Text = "Ingrese nombre de usuario";
+            this.lblUsuario.AutoSize = true;
+            this.lblUsuario.Location = new System.Drawing.Point(113, 132);
+            this.lblUsuario.Name = "lblUsuario";
+            this.lblUsuario.Size = new System.Drawing.Size(167, 16);
+            this.lblUsuario.TabIndex = 4;
+            this.lblUsuario.Text = "Ingrese nombre de usuario";
             // 
-            // label3
+            // lblContraseña
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(116, 196);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(122, 16);
-            this.label3.TabIndex = 5;
-            this.label3.Text = "Ingrese contraseña";
+            this.lblContraseña.AutoSize = true;
+            this.lblContraseña.Location = new System.Drawing.Point(116, 196);
+            this.lblContraseña.Name = "lblContraseña";
+            this.lblContraseña.Size = new System.Drawing.Size(122, 16);
+            this.lblContraseña.TabIndex = 5;
+            this.lblContraseña.Text = "Ingrese contraseña";
             // 
-            // btnRegistro
+            // lblLenguaje
             // 
-            this.btnRegistro.Location = new System.Drawing.Point(119, 302);
-            this.btnRegistro.Name = "btnRegistro";
-            this.btnRegistro.Size = new System.Drawing.Size(144, 36);
-            this.btnRegistro.TabIndex = 6;
-            this.btnRegistro.Text = "Registrarse";
-            this.btnRegistro.UseVisualStyleBackColor = true;
-            this.btnRegistro.Click += new System.EventHandler(this.button1_Click);
+            this.lblLenguaje.AutoSize = true;
+            this.lblLenguaje.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblLenguaje.Location = new System.Drawing.Point(12, 386);
+            this.lblLenguaje.Name = "lblLenguaje";
+            this.lblLenguaje.Size = new System.Drawing.Size(113, 29);
+            this.lblLenguaje.TabIndex = 6;
+            this.lblLenguaje.Text = "Lenguaje";
+            this.lblLenguaje.Click += new System.EventHandler(this.label4_Click);
+            // 
+            // cmbIdioma
+            // 
+            this.cmbIdioma.FormattingEnabled = true;
+            this.cmbIdioma.Location = new System.Drawing.Point(131, 391);
+            this.cmbIdioma.Name = "cmbIdioma";
+            this.cmbIdioma.Size = new System.Drawing.Size(121, 24);
+            this.cmbIdioma.TabIndex = 7;
+            this.cmbIdioma.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.btnRegistro);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
+            this.BackColor = System.Drawing.SystemColors.Info;
+            this.ClientSize = new System.Drawing.Size(789, 458);
+            this.Controls.Add(this.cmbIdioma);
+            this.Controls.Add(this.lblLenguaje);
+            this.Controls.Add(this.lblContraseña);
+            this.Controls.Add(this.lblUsuario);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtContra);
             this.Controls.Add(this.txtNombre);
             this.Controls.Add(this.btnLogin);
             this.Name = "Form1";
             this.Text = "E-Canchas";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -126,9 +141,10 @@
         private System.Windows.Forms.TextBox txtNombre;
         private System.Windows.Forms.TextBox txtContra;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button btnRegistro;
+        private System.Windows.Forms.Label lblUsuario;
+        private System.Windows.Forms.Label lblContraseña;
+        private System.Windows.Forms.Label lblLenguaje;
+        private System.Windows.Forms.ComboBox cmbIdioma;
     }
 }
 

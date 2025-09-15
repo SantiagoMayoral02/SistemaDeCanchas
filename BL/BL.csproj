@@ -43,8 +43,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BLBitacora.cs" />
+    <Compile Include="BLCancha.cs" />
+    <Compile Include="BLCliente.cs" />
+    <Compile Include="BLGestorIdioma.cs" />
+    <Compile Include="BLMantenimiento.cs" />
+    <Compile Include="BLPago.cs" />
+    <Compile Include="BLPermiso.cs" />
+    <Compile Include="BLReserva.cs" />
     <Compile Include="BLSessionManager.cs" />
     <Compile Include="BLUsuarioConexion.cs" />
+    <Compile Include="Interfaces\IObserverIdioma.cs" />
+    <Compile Include="Interfaces\ISujetoIdioma.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -56,9 +65,9 @@
       <Project>{2db50f74-0b0a-4730-88ea-96124747e2e6}</Project>
       <Name>DAL</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Seguridad\Seguridad.csproj">
+    <ProjectReference Include="..\Seguridad\Servicios.csproj">
       <Project>{341f25f4-4fd1-4838-957d-38359840e716}</Project>
-      <Name>Seguridad</Name>
+      <Name>Servicios</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

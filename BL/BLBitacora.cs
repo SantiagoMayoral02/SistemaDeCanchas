@@ -12,17 +12,24 @@ namespace BL
     public class BLBitacora
     {
         BitacoraDAL BitacoraDAL = new BitacoraDAL();
+        
         public void InsertarBitacora(Usuario usu, string mensaje)
         {
             BitacoraDAL.InsertarBitacora(usu, mensaje);
+        }
+
+        public List<Bitacora> ListarBitacora ()
+        {
+            return BitacoraDAL.listarBitacora();
         }
         public string VerificarIntegridadTabla()
         { return BitacoraDAL.VerificarIntegridadTabla(); }
 
         public void comprobarRegistros()
         {
-            List<BE.Bitacora> bitacora = new List<BE.Bitacora>();
+            List<Bitacora> bitacora = new List<Bitacora>();
             bitacora = BitacoraDAL.listarBitacora();
+            string auxMensaje = "";
             string auxBitacora = "La tabla Bitacora tiene registros corruptos y son: ";
             bool valBitacora = false;
             foreach (var item in bitacora)
@@ -33,13 +40,10 @@ namespace BL
                     auxBitacora += item.id.ToString() + " ";
                 }
             }
-            string auxMensaje = "";
+            
             if (valBitacora)
             {
                 auxMensaje += auxBitacora;
-            }
-            if (valBitacora)
-            {
                 MessageBox.Show(auxMensaje);
                 BitacoraDAL.InsertarBitacora((BL.BLSessionManager.GetInstance).Usuario, auxMensaje);
             }

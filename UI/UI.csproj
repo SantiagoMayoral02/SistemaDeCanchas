@@ -46,34 +46,161 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Admin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Admin.Designer.cs">
+      <DependentUpon>Admin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Bitacora.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Bitacora.Designer.cs">
+      <DependentUpon>Bitacora.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Canchas\ModificacionCanchas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Canchas\ModificacionCanchas.Designer.cs">
+      <DependentUpon>ModificacionCanchas.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Form2.cs">
+    <Compile Include="Canchas\FormCrearCancha.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form2.Designer.cs">
-      <DependentUpon>Form2.cs</DependentUpon>
+    <Compile Include="Canchas\FormCrearCancha.Designer.cs">
+      <DependentUpon>FormCrearCancha.cs</DependentUpon>
     </Compile>
-    <Compile Include="Form3.cs">
+    <Compile Include="Usuarios\FormGestionUsuario.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form3.Designer.cs">
-      <DependentUpon>Form3.cs</DependentUpon>
+    <Compile Include="Usuarios\FormGestionUsuario.Designer.cs">
+      <DependentUpon>FormGestionUsuario.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormMantenimientoCanchas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormMantenimientoCanchas.Designer.cs">
+      <DependentUpon>FormMantenimientoCanchas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Usuarios\FormPatentesFamilias.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Usuarios\FormPatentesFamilias.Designer.cs">
+      <DependentUpon>FormPatentesFamilias.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reservas\FormRegistrarPago.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reservas\FormRegistrarPago.Designer.cs">
+      <DependentUpon>FormRegistrarPago.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormTraducciones.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormTraducciones.Designer.cs">
+      <DependentUpon>FormTraducciones.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmClientes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmClientes.Designer.cs">
+      <DependentUpon>frmClientes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reservas\frmListadoReservas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reservas\frmListadoReservas.Designer.cs">
+      <DependentUpon>frmListadoReservas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmReportes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmReportes.Designer.cs">
+      <DependentUpon>frmReportes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reservas\frmReservarCancha.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reservas\frmReservarCancha.Designer.cs">
+      <DependentUpon>frmReservarCancha.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GestorIdioma.cs" />
+    <Compile Include="FormHorarios.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormHorarios.Designer.cs">
+      <DependentUpon>FormHorarios.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Usuarios\FormRegistro.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Usuarios\FormRegistro.Designer.cs">
+      <DependentUpon>FormRegistro.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Usuarios\ModificacionUsuarios.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Usuarios\ModificacionUsuarios.Designer.cs">
+      <DependentUpon>ModificacionUsuarios.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Admin.resx">
+      <DependentUpon>Admin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Bitacora.resx">
+      <DependentUpon>Bitacora.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Canchas\ModificacionCanchas.resx">
+      <DependentUpon>ModificacionCanchas.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form2.resx">
-      <DependentUpon>Form2.cs</DependentUpon>
+    <EmbeddedResource Include="Canchas\FormCrearCancha.resx">
+      <DependentUpon>FormCrearCancha.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form3.resx">
-      <DependentUpon>Form3.cs</DependentUpon>
+    <EmbeddedResource Include="Usuarios\FormGestionUsuario.resx">
+      <DependentUpon>FormGestionUsuario.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormMantenimientoCanchas.resx">
+      <DependentUpon>FormMantenimientoCanchas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Usuarios\FormPatentesFamilias.resx">
+      <DependentUpon>FormPatentesFamilias.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reservas\FormRegistrarPago.resx">
+      <DependentUpon>FormRegistrarPago.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormTraducciones.resx">
+      <DependentUpon>FormTraducciones.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmClientes.resx">
+      <DependentUpon>frmClientes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reservas\frmListadoReservas.resx">
+      <DependentUpon>frmListadoReservas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmReportes.resx">
+      <DependentUpon>frmReportes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reservas\frmReservarCancha.resx">
+      <DependentUpon>frmReservarCancha.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormHorarios.resx">
+      <DependentUpon>FormHorarios.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Usuarios\FormRegistro.resx">
+      <DependentUpon>FormRegistro.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Usuarios\ModificacionUsuarios.resx">
+      <DependentUpon>ModificacionUsuarios.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -106,10 +233,11 @@
       <Project>{70fd33e2-5e81-4559-87e9-5d051bfcdc6a}</Project>
       <Name>BL</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Seguridad\Seguridad.csproj">
+    <ProjectReference Include="..\Seguridad\Servicios.csproj">
       <Project>{341f25f4-4fd1-4838-957d-38359840e716}</Project>
-      <Name>Seguridad</Name>
+      <Name>Servicios</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

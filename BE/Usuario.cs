@@ -10,21 +10,24 @@ namespace BE
     {
         public Usuario()
         {
-           // _permisos = new List<Componente>();
+            _permisos = new List<Componente>();
         }
 
-       // List<Componente> _permisos;
+        List<Componente> _permisos;
         public int Id { get; set; }
         public string Nombre { get; set; }
 
-        //public List<Componente> Permisos
-        //{
-        //    get
-        //    {
-        //        return _permisos;
-        //    }
-        //}
+        public List<Componente> Permisos
+        {
+            get
+            {
+                return _permisos;
+            }
+        }
+        public bool Bloqueado { get; set; }
 
+        public int IntentosFallidos;
+        
         private string contrasena;
 
         public string Contrasena

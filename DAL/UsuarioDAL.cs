@@ -1,5 +1,4 @@
 ﻿using BE;
-using Seguridad;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -14,8 +13,8 @@ namespace DAL
 {
     public class UsuarioDAL
     {
-        Encrypting EncryptManager = new Encrypting();
         DAO dAO = new DAO();
+        PermisoDAL permisoDAL = new PermisoDAL();   
         public void GuardarUsuario(string nombre, string contra)
         {
             try
@@ -34,7 +33,7 @@ namespace DAL
             }
         }
         // PermisosRepository PermisosRepository = new PermisosRepository();
-        public Usuario ValidarUsuario(string nom, string con)
+        public Usuario ValidarUsuario(string nom)
         {
             try
             {
@@ -43,31 +42,25 @@ namespace DAL
                 {
                     { "@nombre", nom }
                 };
-                DAO dAO = new DAO();
                 DataSet ds = dAO.ExecuteDataSet(commandText, parametros);
+
                 if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
                 {
                     DataRow row = ds.Tables[0].Rows[0];
 
-                    string nombreUsuario = row["Nombre"].ToString();
-                    string contrasena = row["Contrasena"].ToString();
-                    int id = Convert.ToInt32(row["id_usuario"]);
-
-                    if (nombreUsuario == nom && EncryptManager.ValidarContraseña(con, contrasena))
+                    Usuario usu = new Usuario();
+                    usu.Nombre = row["Nombre"].ToString();
+                    usu.Contrasena = row["Contrasena"].ToString();
+                    usu.Id = Convert.ToInt32(row["id_usuario"]);
+                    usu.IntentosFallidos = Convert.ToInt32(row["IntentosFallidos"]);
+                    bool bloqueado = Convert.ToBoolean(row["Bloqueado"]);
+                    if (bloqueado)
                     {
-                        Usuario usu = new Usuario();
-                        usu.Nombre = nombreUsuario;
-                        usu.Contrasena = contrasena;
-                        usu.Id = id;
-
-                        // PermisosRepository.FillUserComponents(usu);
-                        return usu;
-                    }
-                    else
-                    {
-                        MessageBox.Show("Contraseña incorrecta");
+                        MessageBox.Show("Usuario bloqueado por intentos fallidos. Por favor contacte al administrador");
                         return null;
                     }
+                    permisoDAL.FillUserComponents(usu);
+                    return usu;
                 }
                 else
                 {
@@ -80,8 +73,40 @@ namespace DAL
                 throw e;
             }
         }
-       
-        public void CambiarContraseña(int id, string contra)
+        public void ActualizarIntentosFallidos(int idUsuario, int intentos)
+        {
+            try
+            {
+                string commandText = "ActualizarIntentosFallidos";
+                var parametros = new Dictionary<string, object>
+                {
+                    { "@id", idUsuario },
+                    { "@intentos", intentos }
+                };
+                dAO.ExecuteNonQuery(commandText, parametros);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        public void BloquearUsuario(int idUsuario)
+        {
+            try
+            {
+                string commandText = "BloqueaUsuario";
+                var parametros = new Dictionary<string, object>
+                {
+                    { "@id", idUsuario }
+                };
+                dAO.ExecuteNonQuery(commandText, parametros);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        public int CambiarContraseña(int id, string contra)
         {
             try
             {
@@ -91,7 +116,7 @@ namespace DAL
                     { "@id", id },
                     { "@nuevaContraseña", contra }
                 };
-                dAO.ExecuteNonQuery(commandText, parametros);
+                return dAO.ExecuteNonQuery(commandText, parametros);
             }
             catch (Exception e)
             {
@@ -99,18 +124,17 @@ namespace DAL
             }
         }
 
-        public void CambiarUsuarioyContraseña(Usuario usu)
+        public int CambiarNombreUsuario(int id, string nombre)
         {
             try
             {
-                string commandText = "CambiarUsuarioyContraseña";
+                string commandText = "CambiarNombreUsuario";
                 var parametros = new Dictionary<string, object>
                 {
-                    { "@id_usuario", usu.Id },
-                    { "@nuevo_nombre", usu.Nombre },
-                    {"@nueva_contrasena", usu.Contrasena }
+                    { "@id_usuario", id },
+                    { "@nuevoUsuario", nombre }
                 };
-                dAO.ExecuteNonQuery(commandText, parametros);
+                return dAO.ExecuteNonQuery(commandText, parametros);
             }
             catch (Exception e)
             {
@@ -127,12 +151,53 @@ namespace DAL
                     { "@nombre", nom },
                     { "@contrasena", con }
                 };
-                int result = dAO.ExecuteNonQuery (commandText, parametros);
+                int result = dAO.ExecuteNonQuery(commandText, parametros);
                 return result;
             }
             catch (Exception e)
             {
 
+                throw e;
+            }
+        }
+        public List<Usuario> ObtenerUsuarios()
+        {
+            try
+            {
+                List<Usuario> listUsuarios = new List<Usuario>();
+                string commandText = "ObtenerUsuarios";
+                DataSet ds = dAO.ExecuteDataSet(commandText);
+                if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+                {
+                    foreach (DataRow row in ds.Tables[0].Rows)
+                    {
+                        Usuario usu = new Usuario();
+                        usu.Nombre = row["Nombre"].ToString();
+                        usu.Id = Convert.ToInt32(row["id_usuario"]);
+                        usu.Bloqueado = Convert.ToBoolean(row["Bloqueado"]);
+                        listUsuarios.Add(usu);
+                    }
+                }
+                return listUsuarios;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        public void DesbloquearUsuario(int idUsuario)
+        {
+            try
+            {
+                string commandText = "DesbloquearUsuario";
+                var parametros = new Dictionary<string, object>
+                {
+                    { "@id", idUsuario }
+                };
+                dAO.ExecuteNonQuery(commandText, parametros);
+            }
+            catch (Exception e)
+            {
                 throw e;
             }
         }

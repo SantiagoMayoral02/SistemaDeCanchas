@@ -1,10 +1,6 @@
 ﻿using BE;
 using DAL;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BL
 {
@@ -17,38 +13,45 @@ namespace BL
             set { usuario = value; }
         }
         private static BLSessionManager _session;
+      
+        private static Object _lock = new object();
+
         public static BLSessionManager GetInstance
         {
             get
             {
+                lock (_lock)
+                {
+                    if (_session == null)
+                        _session = new BLSessionManager();
+                }
+
                 return _session;
             }
         }
-
         public static void login(Usuario usu)
         {
-
-            if (_session == null)
+            var session = GetInstance;
+            if (session.usuario == null)
             {
-                _session = new BLSessionManager();
-                _session.usuario = usu;
-                UsuarioDAL conexion = new UsuarioDAL();
+                session.usuario = usu;
             }
             else
             {
-                throw new Exception("Sesion no iniciada");
+                throw new Exception("Ya hay una sesión iniciada");
             }
         }
 
         public static void logaut()
         {
-            if (_session != null)
+            var session = GetInstance;
+            if (session.usuario != null)
             {
-                _session = null;
+                session.usuario = null;
             }
             else
             {
-                throw new Exception("Sesion no iniciada");
+                throw new Exception("No hay sesión iniciada");
             }
         }
     }

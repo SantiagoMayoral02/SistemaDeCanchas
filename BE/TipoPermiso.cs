@@ -9,12 +9,14 @@ namespace BE
     public enum TipoPermiso
     {
         PuedeHacerTodo,
+        PuedeReservar,
+        PuedeVisualizarDashboards,
+        PuedeConfirmarPagos,
+        PuedeBloquearCancha,
+        PuedeConfigurarMantenimiento,
         PuedeHacerA,
         PuedeHacerB,
         PuedeHacerC,
-        PuedeHacerD,
-        PuedeHacerE,
-        PuedeHacerF
-        
+        PuedeHacerD
     }
 }

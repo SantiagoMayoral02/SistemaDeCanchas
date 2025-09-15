@@ -1,28 +1,31 @@
 ﻿using BE;
 using BL;
+using BL.Interfaces;
 using Seguridad;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace UI
 {
-    public partial class Form1 : Form
+    public partial class Form1 : Form, IObserverIdioma
     {
         BLUsuarioConexion BLUsu = new BLUsuarioConexion();
         BLBitacora BLBita = new BLBitacora();
-        Encrypting encryptManager = new Encrypting();
+        public string nom;
+        public string pass;
+        BLGestorIdioma gestor = new BLGestorIdioma();
         public Form1()
         {
             InitializeComponent();
+            txtContra.UseSystemPasswordChar = true;
+            this.AcceptButton = btnLogin;
             if (HayDatosCorruptos())
                 MessageBox.Show("Checksum de tabla bitacora alterado");
+            GestorIdioma.Instancia.Agregar(this);
+            
+            /*Actualizar(GestorIdioma.Instancia.IdiomaActual);*/  //Acá llamar al idioma por defecto, por ejemplo Español (lukitas)
         }
         //private void 
         //if(digitoVerificador.comprobarTablas())
@@ -31,83 +34,45 @@ namespace UI
         //        button2.Enabled = true;
         //        button2.Visible = true;
         //    }
-    private void label1_Click(object sender, EventArgs e)
+        private void label1_Click(object sender, EventArgs e)
         {
 
         }
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            if(ValidarIngresoDeCampos())
+            if (ValidarIngresoDeCampos())
             {
-                string nom = txtNombre.Text;
-                string pass = txtContra.Text;
+                nom = txtNombre.Text;
+                pass = txtContra.Text;
                 Usuario usu = BLUsu.ValidarUsuario(nom, pass);
                 if (usu != null)
                 {
                     BLSessionManager.login(usu);
                     BLBita.InsertarBitacora((BL.BLSessionManager.GetInstance).Usuario, "Ingreso de usuario");
-                    Form2 formLogin = new Form2();
-                    formLogin.Show();
-                    //switch (usu.Permisos[0].Id)
-                    //{
-                    //    case 1:
-                    //        Admin form2 = new Admin(this);
-                    //        form2.Show();
-                    //        this.Hide();
-                    //        break;
-                    //    case 3:
-                    //        Venta form3 = new Venta(this);
-                    //        form3.Show();
-                    //        this.Hide();
-                    //        break;
-                    //    case 10:
-                    //        Venta form4 = new Venta(this);
-                    //        form4.Show();
-                    //        this.Hide();
-                    //        break;
-                    //    case 12:
-                    //        Venta form5 = new Venta(this);
-                    //        form5.Show();
-                    //        this.Hide();
-                    //        break;
-                    //    case 5:
-                    //        Analisis_de_equipo form6 = new Analisis_de_equipo(this);
-                    //        form6.Show();
-                    //        this.Hide();
-                    //        break;
-                    //    case 6:
-                    //        Analista_de_campo form7 = new Analista_de_campo(this);
-                    //        form7.Show();
-                    //        this.Hide();
-                    //        break;
-                    //    case 4:
-                    //        Instalador form8 = new Instalador(this);
-                    //        form8.Show();
-                    //        this.Hide();
-                    //        break;
-                    //    case 8:
-                    //        Cliente form9 = new Cliente(this);
-                    //        form9.Show();
-                    //        this.Hide();
-                    //        break;
-                    //    default:
-                    //        MessageBox.Show("Roll no valido");
-                    //        break;
-                    //}
+                    new Admin(this).Show();
+                    this.Hide();
                 }
             }
         }
+        
         private bool ValidarIngresoDeCampos()
         {
+            nom = txtNombre.Text.Trim();
+            pass = txtContra.Text.Trim();
+            if (string.IsNullOrWhiteSpace(nom) || string.IsNullOrWhiteSpace(pass))
+            {
+                MessageBox.Show("Debe completar usuario y contraseña.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
             return true;
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            RegistroForm formRegistro = new RegistroForm();
-            formRegistro.Show();
-        }
+        //private void button1_Click(object sender, EventArgs e)
+        //{
+        //    //FormRegistro formRegistro = new FormRegistro();
+        //    //formRegistro.Show();
+        //}
         private bool HayDatosCorruptos()
         {
             string resultado = BLBita.VerificarIntegridadTabla();
@@ -117,6 +82,93 @@ namespace UI
                 return true;
             }
             return false;
+        }
+
+        private void txtContra_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            LlenarComboIdiomas();
+            AsignarTagsPorNombre(this);
+
+        }
+        private void AsignarTagsPorNombre(Control control)
+        {
+            if (control.Tag == null)
+                control.Tag = control.Name;
+
+            EtiquetaHelper.Registrar(control.Tag?.ToString());
+
+            foreach (Control hijo in control.Controls)
+                AsignarTagsPorNombre(hijo);
+        }
+        public void Actualizar(Idioma idioma)
+        {
+            var traducciones = gestor.ObtenerTraducciones(idioma);
+
+            foreach (Control ctrl in this.Controls)
+            {
+                AplicarTraduccion(ctrl, traducciones);
+            }
+        }
+        private void AplicarTraduccion(Control control, Dictionary<string, string> traducciones)
+        {
+            if (control.Tag != null)
+            {
+                string clave = control.Tag.ToString();
+                if (traducciones.TryGetValue(clave, out string texto))
+                {
+                    control.Text = texto;
+                }
+            }
+            foreach (Control hijo in control.Controls) //Si el control posee hijos, aplicar traducción recursivamente
+            {
+                AplicarTraduccion(hijo, traducciones);
+            }
+        }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+
+        }
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!isInitializingComboBox && cmbIdioma.SelectedItem is Idioma idiomaSeleccionado)
+            {
+                GestorIdioma.Instancia.CambiarIdioma(idiomaSeleccionado);
+            }
+        }
+        private bool isInitializingComboBox = false;
+        private void LlenarComboIdiomas()
+        {
+            isInitializingComboBox = true;
+
+            var idiomas = gestor.ObtenerIdiomas();
+            cmbIdioma.DataSource = idiomas;
+            cmbIdioma.DisplayMember = "Nombre";
+            cmbIdioma.ValueMember = "Id";
+
+            // Usar idioma actual si está definido
+            Idioma idiomaActual = GestorIdioma.Instancia.IdiomaActual;
+
+            if (idiomaActual != null)
+            {
+                cmbIdioma.SelectedItem = idiomas.FirstOrDefault(i => i.Id == idiomaActual.Id);
+            }
+            else
+            {
+                var idiomaPorDefecto = idiomas.FirstOrDefault(i => i.Nombre.ToLower() == "español");
+                if (idiomaPorDefecto != null)
+                {
+                    cmbIdioma.SelectedItem = idiomaPorDefecto;
+                    GestorIdioma.Instancia.CambiarIdioma(idiomaPorDefecto);
+                }
+
+                isInitializingComboBox = false;
+            }
         }
     }
 }
